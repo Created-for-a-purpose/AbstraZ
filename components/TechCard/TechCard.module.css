@@ -1,0 +1,35 @@
+.container {
+    width: 300px;
+    aspect-ratio: 2 / 3;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 1rem;
+    border: 2px solid purple;
+  }
+
+  .container::-webkit-scrollbar, .card::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .card {
+    transform: translateZ(0);
+  }
+  
+  .image {
+    height: 40%;
+    object-fit: cover; 
+  }
+  
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .container:hover {
+    transform: rotateY(10deg) rotateX(-10deg) scale(1.05); 
+  }
+  
