@@ -1,16 +1,18 @@
-import TechCard from "@/components/TechCard/TechCard";
+"use client"
 import styles from "./page.module.css";
+import { tech } from "@/utils/tech.js"
+import { useAuthKit } from "@/hooks/useAuthKit";
 
 export default function Home() {
-  function Entry(props) {
+  const { login } = useAuthKit();
+  
+  function Entry({ props }) {
     return (
       <div className={styles.entry}>
-        <img src="https://altcoinsbox.com/wp-content/uploads/2023/03/matic-logo.webp"></img>
+        <img src={props.image}/>
         <div className={styles.details}>
-          <div className={styles.title}>SafeCore</div>
-          <div className={styles.subtitle}>
-            Now, even your grandmother can use this Dapp
-          </div>
+          <div className={styles.title}>{props.title}</div>
+          <div className={styles.subtitle}>{props.subtitle}</div>
         </div>
       </div>
     );
@@ -37,13 +39,11 @@ export default function Home() {
       <div className={styles.bottom}>
         <div className={styles.title}>Technologies Used</div>
         <div className={styles.list}>
-          <Entry></Entry>
-          <Entry></Entry>
-          <Entry></Entry>
-          <Entry></Entry>
-          <Entry></Entry>
-          <Entry></Entry>
-          <Entry></Entry>
+          {
+            tech.map(
+              (item, id) => <Entry key={id} props={item}/>
+            )
+          }
         </div>
       </div>
     </div>
