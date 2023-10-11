@@ -1,4 +1,3 @@
-import TechCard from "@/components/TechCard/TechCard";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -26,6 +25,9 @@ export default function Home() {
             eiusmod tempor incididunt ut labore et dolore magna aliqua. ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
+          </div>
+          <div className={styles.btn_container}>
+            <button className={styles.btn}>Create a safe account</button>
           </div>
         </div>
         <div className={styles.right}>

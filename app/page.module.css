@@ -26,12 +26,28 @@
 }
 
 .top .left .body {
+  width: calc(100% - 5rem);
   font-size: 2rem;
-  margin-left: 5rem;
   margin-top: 1rem;
+}
+.top .left .btn_container {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
+.top .left .btn_container .btn {
+  width: 350px;
+  height: 3rem;
+  background-color: var(--green);
+  border: none;
+  color: black;
+  border-radius: 0.25rem;
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-left: 2.5rem;
+}
 .top .right {
   width: 50%;
   height: 100%;
@@ -49,22 +65,21 @@
   margin-left: 5rem;
 }
 
-
 /*--------------------------*/
 
 .bottom {
-    width: 100%;
-    height: fit-content;
-    padding-bottom: 2rem;
-    min-height: 100%;
+  width: 100%;
+  height: fit-content;
+  padding-bottom: 2rem;
+  min-height: 100%;
 }
 
-.bottom>.title {
-    font-size: 3rem;
-    width: 100%;
-    text-align: center;
-    color: var(--green);
-    margin-top: 2rem;
+.bottom > .title {
+  font-size: 3rem;
+  width: 100%;
+  text-align: center;
+  color: var(--green);
+  margin-top: 2rem;
 }
 
 .bottom .list {
@@ -75,26 +90,23 @@
   width: 100%;
   padding-top: 2rem;
   gap: 1.5rem;
-
 }
 
-.bottom .list .entry{
+.bottom .list .entry {
   display: flex;
   gap: 1rem;
   width: 40%;
 }
 
-.bottom .list .entry .title{
+.bottom .list .entry .title {
   font-size: 1.5rem;
 }
 
-.bottom .list .entry .subtitle{
+.bottom .list .entry .subtitle {
   font-size: 1.25rem;
 }
 
-
-.bottom .list .entry img{
+.bottom .list .entry img {
   width: 50px;
   height: 50px;
 }
-
