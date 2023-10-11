@@ -35,6 +35,7 @@
 
 .title {
     color: var(--green);
+    text-decoration: none;
 }
 
 .middle {

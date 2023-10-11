@@ -8,7 +8,7 @@ export default function Navbar() {
       <nav className={styles.container}>
         <div className={styles.left}>
             <FaEthereum className={styles.eth}></FaEthereum>
-            <div className={styles.title}>AbstraZ</div>
+            <Link className={styles.title} href={"/"}>AbstraZ</Link>
         </div>
         <div className={styles.middle}>
             <Link href={"/dashboard"} className={styles.link}>Dashboard</Link>
@@ -19,7 +19,7 @@ export default function Navbar() {
             <div className={styles.dot}>
                 <div className={styles.dot_inner}></div>
             </div>
-            <div className={styles.chain}>Chain</div>
+            <div className={styles.chain}>Mumbai</div>
         </div>
       </nav>
     </>
