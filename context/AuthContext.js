@@ -1,11 +1,12 @@
-"use client"
+'use client'
 import { useCallback, createContext, useState, useEffect } from 'react'
 import { Web3AuthModalPack } from '@safe-global/auth-kit'
-import { CHAIN_NAMESPACES, WALLET_ADAPTERS, log } from '@web3auth/base'
+import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from '@web3auth/base'
 import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter'
 import { GelatoRelayPack } from '@safe-global/relay-kit'
 import AccountAbstraction from '@safe-global/account-abstraction-kit-poc'
+import { SafeFactory, EthersAdapter } from '@safe-global/protocol-kit'
 import { ethers } from 'ethers'
 
 const defaultState = {
@@ -102,8 +103,33 @@ const AuthContextProvider = ({ children }) => {
         return balance?.toString();
     }
 
+    const createTreasurySafe = async (operators)=>{
+        if(!provider) return
+        const signer = await provider.getSigner()
+        const ethAdapter = new EthersAdapter({
+            signerOrProvider: signer,
+            ethers
+        })
+        const safeFactory = await SafeFactory.create({ ethAdapter })
+        const safeAccountConfig = {
+            owners: [
+                ...operators,
+                await signer.getAddress()
+            ],
+            threshold: 2
+        }
+        const txOptions = {
+            gasLimit: '1000000',
+            gas: '2100000',
+            gasPrice: '8000000000',
+        }
+        const safeSdkOwner = await safeFactory.deploySafe({ safeAccountConfig, txOptions })
+        const safeAddress = await safeSdkOwner.getAddress()
+        return safeAddress
+    }
+    
     return (
-        <AuthContext.Provider value={{ login, eoa, safes, fetchSafeAddress, fetchSafeBalance }}>
+        <AuthContext.Provider value={{ login, eoa, safes, fetchSafeAddress, fetchSafeBalance, createTreasurySafe }}>
             {children}
         </AuthContext.Provider>
     )

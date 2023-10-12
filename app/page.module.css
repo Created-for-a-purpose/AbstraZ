@@ -47,7 +47,9 @@
   font-size: 1.5rem;
   margin-top: 3rem;
   margin-left: 2.5rem;
+  cursor: pointer;
 }
+
 .top .right {
   width: 50%;
   height: 100%;

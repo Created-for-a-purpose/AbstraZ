@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import Input from "@/components/Input/Input";
 import styles from "./page.module.css";
-import { useEffect } from "react";
+import { FaExternalLinkAlt } from "react-icons/fa"
+import { useAuthKit } from "@/hooks/useAuthKit";
 
 export default function CreateDao(params) {
   // State variables to store input field values
@@ -11,6 +12,9 @@ export default function CreateDao(params) {
   const [selectedToken, setSelectedToken] = useState("null"); // Selected Token
   const [selectedZkKyc, setSelectedZkKyc] = useState("null"); // Selected Zk-KYC
   const [inputFields, setInputFields] = useState([]); // MultiSig Treasury
+  const [treasuryAddress, setTreasuryAddress] = useState(""); // Treasury Address
+
+  const { eoa, safes, createTreasurySafe } = useAuthKit();
 
   // Event handlers to update state variables
   const handleDaoNameChange = (e) => {
@@ -29,7 +33,6 @@ export default function CreateDao(params) {
     setSelectedZkKyc(e.target.value);
   };
 
-
   const handleWalletAddressChange = (e, index) => {
     const newInputFields = [...inputFields];
     newInputFields[index].walletAddress = e.target.value;
@@ -42,8 +45,10 @@ export default function CreateDao(params) {
     setInputFields(newInputFields);
   };
 
-  const handleSubmit = () => {
-    console.log(daoName, amount, selectedToken, selectedZkKyc, inputFields);
+  const handleSubmit = async ()=>{
+    const operators = inputFields.map((inputField)=>inputField.walletAddress)
+    const treasuryAddress = await createTreasurySafe(operators)
+    setTreasuryAddress(treasuryAddress)
   }
 
   return (
@@ -56,7 +61,7 @@ export default function CreateDao(params) {
             <label>DAO Name</label>
             <div className={styles.input}>
               <Input
-                placeholder={"DAO Name"}
+                placeholder={" DAO Name"}
                 type={"text"}
                 fontSize={"1.5rem"}
                 value={daoName}
@@ -66,10 +71,10 @@ export default function CreateDao(params) {
           </div>
           {/* Amount input */}
           <div className={styles.input_container}>
-            <label>Amount</label>
+            <label>Minimum Investment</label>
             <div className={styles.input}>
               <Input
-                placeholder={"Amount"}
+                placeholder={" Amount"}
                 type={"text"}
                 fontSize={"1.5rem"}
                 value={amount}
@@ -80,23 +85,24 @@ export default function CreateDao(params) {
                 value={selectedToken}
                 onChange={handleTokenChange}
               >
-                <option value={"null"}>Select Token</option>
-                <option value={"Eth"}>Eth</option>
-                <option value={"Matic"}>Matic</option>
+                <option value={"null"} hidden>Select Token</option>
+                <option value={"Eth"}>ETH</option>
+                <option value={"Matic"}>MATIC</option>
                 <option value={"MNT"}>MNT</option>
               </select>
             </div>
           </div>
           {/* Zk-KYC input */}
           <div className={styles.input_container}>
-            <label>Zk-KYC</label>
+            <label>zk-KYC</label>
             <div className={styles.input}>
               <select
                 className={styles.select}
                 value={selectedZkKyc}
                 onChange={handleZkKycChange}
               >
-                <option value={"null"}>Select Option</option>
+                <option value={"null"} hidden>Select Option</option>
+                <option value={"minAge"}>Minimum age: 18</option>
               </select>
             </div>
           </div>
@@ -107,7 +113,7 @@ export default function CreateDao(params) {
               {inputFields.map((inputField, index) => (
                 <div className={styles.input} key={inputField.id}>
                   <Input
-                    placeholder={`Wallet Address of ${index + 1}th owner`}
+                    placeholder={` Wallet Address of ${index + 1}th owner`}
                     type={"text"}
                     fontSize={"1.5rem"}
                     value={inputField.walletAddress}
@@ -122,6 +128,10 @@ export default function CreateDao(params) {
               </button>
             </div>
           </div>
+          { treasuryAddress!=='' &&
+          <div className={styles.safe}>✅ Treasury Address: {treasuryAddress} 
+          <FaExternalLinkAlt className={styles.safeLink}/>
+          </div> }
           <button className={styles.submit} onClick={handleSubmit}>Create</button>
         </div>
       </div>

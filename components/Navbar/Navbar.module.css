@@ -20,7 +20,7 @@
 
 .eth *{
     animation: glow 1s infinite alternate;
-    color: purple;
+    color: rgb(255, 71, 123);
 }
 
 @keyframes glow {

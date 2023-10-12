@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import styles from "./page.module.css";
 import { tech } from "@/utils/tech.js"
 import { useAuthKit } from "@/hooks/useAuthKit";
@@ -30,7 +30,7 @@ export default function Home() {
             aliquip ex ea commodo consequat.
           </div>
           <div className={styles.btn_container}>
-            <button className={styles.btn}>Create a safe account</button>
+            <button className={styles.btn} onClick={login}>Create a Safe account</button>
           </div>
         </div>
         <div className={styles.right}>

@@ -7,7 +7,7 @@ export default function Navbar() {
     <>
       <nav className={styles.container}>
         <div className={styles.left}>
-            <FaEthereum className={styles.eth}></FaEthereum>
+            <FaEthereum className={styles.eth}/>
             <Link className={styles.title} href={"/"}>AbstraZ</Link>
         </div>
         <div className={styles.middle}>
