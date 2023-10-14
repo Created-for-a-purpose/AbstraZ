@@ -1,0 +1,13 @@
+{
+  "name": "hardhat-project",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.18.1"
+  },
+  "dependencies": {
+    "@axelar-network/axelar-gmp-sdk-solidity": "^5.4.0",
+    "@axelar-network/axelarjs-sdk": "^0.13.6",
+    "axios": "^1.5.1",
+    "dotenv": "^16.3.1"
+  }
+}

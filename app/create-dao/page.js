@@ -5,7 +5,7 @@ import styles from "./page.module.css";
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { useAuthKit } from "@/hooks/useAuthKit";
 
-export default function CreateDao(params) {
+export default function CreateDao() {
   // State variables to store input field values
   const [daoName, setDaoName] = useState(""); // DAO Name
   const [amount, setAmount] = useState(""); // Amount
@@ -14,7 +14,7 @@ export default function CreateDao(params) {
   const [inputFields, setInputFields] = useState([]); // MultiSig Treasury
   const [treasuryAddress, setTreasuryAddress] = useState(""); // Treasury Address
 
-  const { eoa, safes, createTreasurySafe } = useAuthKit();
+  const { eoa, createTreasurySafe, createDao } = useAuthKit();
 
   // Event handlers to update state variables
   const handleDaoNameChange = (e) => {
@@ -49,6 +49,7 @@ export default function CreateDao(params) {
     const operators = inputFields.map((inputField)=>inputField.walletAddress)
     const treasuryAddress = await createTreasurySafe(operators)
     setTreasuryAddress(treasuryAddress)
+    await createDao(daoName, amount, selectedToken, treasuryAddress)
   }
 
   return (
@@ -128,6 +129,7 @@ export default function CreateDao(params) {
               </button>
             </div>
           </div>
+          eoa: {eoa}
           { treasuryAddress!=='' &&
           <div className={styles.safe}>✅ Treasury Address: {treasuryAddress} 
           <FaExternalLinkAlt className={styles.safeLink}/>

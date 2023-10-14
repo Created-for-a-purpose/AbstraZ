@@ -25,8 +25,10 @@ const AuthContextProvider = ({ children }) => {
         async function loadAuthModal() {
             const chainConfig = {
                 chainNamespace: CHAIN_NAMESPACES.EIP155,
-                chainId: '0x13881',
-                rpcTarget: 'https://indulgent-shy-aura.matic-testnet.discover.quiknode.pro/f3eadc815d04049d61d581cc6e1f6a6f152c7eec/'
+                // chainId: '0x13881',
+                // rpcTarget: 'https://indulgent-shy-aura.matic-testnet.discover.quiknode.pro/f3eadc815d04049d61d581cc6e1f6a6f152c7eec/'
+                chainId: '0x5a2',
+                rpcTarget: 'https://rpc.public.zkevm-test.net'
             }
             const options = {
                 clientId: 'BOR5khYqb4xXeXqZHeoLx7gwIhYUFLiyLyrQHjmrOjJaUvijslO_k4z7AkV23hVOzGIFmzfEaPwsGEO7EbLxmAs',
@@ -127,9 +129,13 @@ const AuthContextProvider = ({ children }) => {
         const safeAddress = await safeSdkOwner.getAddress()
         return safeAddress
     }
+
+    const createDao = async (daoName, minInv, minInvToken, treasuryAddress)=>{
+        
+    }
     
     return (
-        <AuthContext.Provider value={{ login, eoa, safes, fetchSafeAddress, fetchSafeBalance, createTreasurySafe }}>
+        <AuthContext.Provider value={{ login, eoa, safes, fetchSafeAddress, fetchSafeBalance, createTreasurySafe, createDao }}>
             {children}
         </AuthContext.Provider>
     )
