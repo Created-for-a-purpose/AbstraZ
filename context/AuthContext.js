@@ -8,14 +8,16 @@ import { GelatoRelayPack } from '@safe-global/relay-kit'
 import AccountAbstraction from '@safe-global/account-abstraction-kit-poc'
 import { SafeFactory, EthersAdapter } from '@safe-global/protocol-kit'
 import { ethers } from 'ethers'
+import { chains } from '@/utils/chains'
 
 const defaultState = {
-    login: () => {},
+    login: () => { },
 }
 
 const AuthContext = createContext(defaultState)
 
 const AuthContextProvider = ({ children }) => {
+    const [chain, setChain] = useState('mumbai')
     const [eoa, setEoa] = useState('')
     const [safes, setSafes] = useState([])
     const [web3AuthModalPack, setWeb3AuthModalPack] = useState(null)
@@ -25,10 +27,8 @@ const AuthContextProvider = ({ children }) => {
         async function loadAuthModal() {
             const chainConfig = {
                 chainNamespace: CHAIN_NAMESPACES.EIP155,
-                // chainId: '0x13881',
-                // rpcTarget: 'https://indulgent-shy-aura.matic-testnet.discover.quiknode.pro/f3eadc815d04049d61d581cc6e1f6a6f152c7eec/'
-                chainId: '0x5a2',
-                rpcTarget: 'https://rpc.public.zkevm-test.net'
+                chainId: chains[chain].chainId,
+                rpcTarget: chains[chain].rpcTarget
             }
             const options = {
                 clientId: 'BOR5khYqb4xXeXqZHeoLx7gwIhYUFLiyLyrQHjmrOjJaUvijslO_k4z7AkV23hVOzGIFmzfEaPwsGEO7EbLxmAs',
@@ -72,7 +72,7 @@ const AuthContextProvider = ({ children }) => {
             setWeb3AuthModalPack(web3AuthModalPack)
         }
         loadAuthModal()
-    }, [])
+    }, [chain])
 
     const login = useCallback(async () => {
         if (!web3AuthModalPack) return
@@ -83,7 +83,7 @@ const AuthContextProvider = ({ children }) => {
 
         const provider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider())
         setProvider(provider)
-    }, [web3AuthModalPack])
+    }, [chain, web3AuthModalPack])
 
     useEffect(() => {
         if (web3AuthModalPack && web3AuthModalPack.getProvider())
@@ -105,8 +105,8 @@ const AuthContextProvider = ({ children }) => {
         return balance?.toString();
     }
 
-    const createTreasurySafe = async (operators)=>{
-        if(!provider) return
+    const createTreasurySafe = async (operators) => {
+        if (!provider) return
         const signer = await provider.getSigner()
         const ethAdapter = new EthersAdapter({
             signerOrProvider: signer,
@@ -118,7 +118,7 @@ const AuthContextProvider = ({ children }) => {
                 ...operators,
                 await signer.getAddress()
             ],
-            threshold: 2
+            threshold: 1
         }
         const txOptions = {
             gasLimit: '1000000',
@@ -130,12 +130,8 @@ const AuthContextProvider = ({ children }) => {
         return safeAddress
     }
 
-    const createDao = async (daoName, minInv, minInvToken, treasuryAddress)=>{
-        
-    }
-    
     return (
-        <AuthContext.Provider value={{ login, eoa, safes, fetchSafeAddress, fetchSafeBalance, createTreasurySafe, createDao }}>
+        <AuthContext.Provider value={{ chain, eoa, safes, provider, login, fetchSafeAddress, fetchSafeBalance, createTreasurySafe, setChain }}>
             {children}
         </AuthContext.Provider>
     )
