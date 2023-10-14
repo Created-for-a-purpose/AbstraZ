@@ -13,7 +13,7 @@ export default function Navbar() {
         <div className={styles.middle}>
             <Link href={"/dashboard"} className={styles.link}>Dashboard</Link>
             <Link href={"/create-dao"} className={styles.link}>Create DAO</Link>
-            <Link href={"/join"} className={styles.link}>Join DAO</Link>
+            <Link href={"/join-dao"} className={styles.link}>Join DAO</Link>
         </div>
         <div className={styles.right}>
             <div className={styles.dot}>
