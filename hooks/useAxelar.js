@@ -2,7 +2,7 @@ import { AxelarQueryAPI, Environment, CHAINS } from "@axelar-network/axelarjs-sd
 import { useAuthKit } from "./useAuthKit";
 import { chains } from "@/utils/chains";
 import { ethers } from "ethers";
-import crosschainAbi from "@/contracts/artifacts/contracts/CrosschainDAO.sol/CrosschainDAO.json";
+import crosschainAbi from "@/contracts/artifacts/contracts/dao/CrosschainDAO.sol/CrosschainDAO.json";
 
 export const useAxelar = () => {
     const { provider, chain } = useAuthKit();
