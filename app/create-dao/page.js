@@ -4,8 +4,9 @@ import Input from "@/components/Input/Input";
 import styles from "./page.module.css";
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { useAuthKit } from "@/hooks/useAuthKit";
+import { useAxelar } from "@/hooks/useAxelar";
 
-export default function CreateDao(params) {
+export default function CreateDao() {
   // State variables to store input field values
   const [daoName, setDaoName] = useState(""); // DAO Name
   const [amount, setAmount] = useState(""); // Amount
@@ -14,7 +15,8 @@ export default function CreateDao(params) {
   const [inputFields, setInputFields] = useState([]); // MultiSig Treasury
   const [treasuryAddress, setTreasuryAddress] = useState(""); // Treasury Address
 
-  const { eoa, safes, createTreasurySafe } = useAuthKit();
+  const { eoa, createTreasurySafe } = useAuthKit();
+  const { createDao } = useAxelar();
 
   // Event handlers to update state variables
   const handleDaoNameChange = (e) => {
@@ -46,9 +48,11 @@ export default function CreateDao(params) {
   };
 
   const handleSubmit = async ()=>{
+    if(!eoa) return;
     const operators = inputFields.map((inputField)=>inputField.walletAddress)
     const treasuryAddress = await createTreasurySafe(operators)
     setTreasuryAddress(treasuryAddress)
+    await createDao(daoName, amount+' '+selectedToken, selectedZkKyc, treasuryAddress)
   }
 
   return (
@@ -86,8 +90,8 @@ export default function CreateDao(params) {
                 onChange={handleTokenChange}
               >
                 <option value={"null"} hidden>Select Token</option>
-                <option value={"Eth"}>ETH</option>
-                <option value={"Matic"}>MATIC</option>
+                <option value={"ETH"}>ETH</option>
+                <option value={"MATIC"}>MATIC</option>
                 <option value={"MNT"}>MNT</option>
               </select>
             </div>
@@ -102,7 +106,7 @@ export default function CreateDao(params) {
                 onChange={handleZkKycChange}
               >
                 <option value={"null"} hidden>Select Option</option>
-                <option value={"minAge"}>Minimum age: 18</option>
+                <option value={"min-age:18"}>Minimum age: 18</option>
               </select>
             </div>
           </div>

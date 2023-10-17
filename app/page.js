@@ -4,7 +4,7 @@ import { tech } from "@/utils/tech.js"
 import { useAuthKit } from "@/hooks/useAuthKit";
 
 export default function Home() {
-  const { login } = useAuthKit();
+  const { login, eoa } = useAuthKit();
   
   function Entry({ props }) {
     return (
@@ -30,7 +30,7 @@ export default function Home() {
             aliquip ex ea commodo consequat.
           </div>
           <div className={styles.btn_container}>
-            <button className={styles.btn} onClick={login}>Create a Safe account</button>
+            <button className={styles.btn} onClick={login}>{eoa?"Safe account created !":"Create a Safe Account"}</button>
           </div>
         </div>
         <div className={styles.right}>

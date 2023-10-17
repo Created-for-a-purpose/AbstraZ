@@ -1,6 +1,6 @@
 import styles from "./DaoCard.module.css";
 
-export default function DaoCard({Amount, NAV, Title, KYC}) {
+export default function DaoCard({Amount, NAV, Title, KYC, setClicked}) {
   return (
     <>
       <div className={styles.container}>
@@ -19,7 +19,7 @@ export default function DaoCard({Amount, NAV, Title, KYC}) {
           </div>
         </div>
         <div className={styles.right}>
-          <button className={styles.btn}>Verify zk-KYC/VC</button>
+          <button className={styles.btn} onClick={()=>setClicked(true)}>Verify zk-KYC/VC</button>
         </div>
       </div>
     </>
