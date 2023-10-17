@@ -1,14 +1,16 @@
 .container {
-    width: 60%;
+    width: 100%;
     aspect-ratio: 4;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #000000cc;
     border-radius: 0.4rem;
-    display: flex;
-    height: 100%;
 }
-
+.top {
+    display: flex;
+    width: 100%;
+    height: 80%;
+}
 .left {
-    width: 50%;
+    width: 70%;
     display: flex;
     flex-direction: column;
 }
@@ -24,16 +26,33 @@
 }
 
 .property {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin-bottom: 2%;
 }
 
 .right {
-    width: 50%;
+    width: 30%;
     display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.composition_title {
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.composition_value {
+    font-size: 1.5rem;    
+    margin-bottom: 2%;
+}
+
+.bottom {
+    display: flex;
+    width: 100%;
     align-items: center;
     justify-content: center;
-    height: 100%;
 }
 
 .btn {

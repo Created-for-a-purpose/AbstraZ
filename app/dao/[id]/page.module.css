@@ -1,10 +1,14 @@
 .container {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     width: 100%;
     min-height: 100%;
     gap: 2rem;
-    padding: 3rem;
+    padding: 1rem;
+}
+
+.title {
+    width: 100%;
+    font-size: 2rem;
 }
