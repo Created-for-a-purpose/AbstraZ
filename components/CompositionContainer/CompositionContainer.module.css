@@ -1,0 +1,7 @@
+.container {
+    width: 100px;
+    height: 2rem;
+    display: flex;
+    border-radius: 10rem;
+}
+

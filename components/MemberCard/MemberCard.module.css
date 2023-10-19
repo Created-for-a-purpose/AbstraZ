@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    width: 100%;
+    background-color: black;
+    height: 4rem;
+    align-items: center;
+    border-radius: 0.4rem;
+}
+
+
+.name, .role, .investment {
+    font-size: 1.25rem;
+}
+
+.name, .role {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.role p {
+    padding: 0.2rem 0.4rem;
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+.investment {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.investment span{
+    margin-left: 0.25em;
+}
+.button {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button button{
+    width: 200px;
+    padding: 0.5rem;
+    background-color: var(--green);
+    border: none;
+    color: black;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+}

@@ -1,0 +1,67 @@
+.container {
+    width: 100%;
+    aspect-ratio: 4;
+    background-color: #000000cc;
+    border-radius: 0.4rem;
+}
+.top {
+    display: flex;
+    width: 100%;
+    height: 80%;
+}
+.left {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.left * {
+    margin-left: 2rem;
+}
+
+.title {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.property {
+    font-size: 1.5rem;
+    margin-bottom: 2%;
+}
+
+.right {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.composition_title {
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.composition_value {
+    font-size: 1.5rem;    
+    margin-bottom: 2%;
+}
+
+.bottom {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    width: 250px;
+    height: 3rem;
+    background-color: var(--green);
+    border: none;
+    color: black;
+    border-radius: 0.25rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
