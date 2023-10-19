@@ -46,3 +46,8 @@
     font-size: 1.5rem;
     cursor: pointer;
 }
+
+.join {
+    text-decoration: none;
+    color: black;
+}

@@ -1,4 +1,4 @@
-import ageCircuit from "@/noir/target/noir.json"
+import ageCircuit from "@/noir/age/target/noir.json"
 import { decompressSync } from "fflate"
 import { Crs, newBarretenbergApiAsync, RawBuffer } from "@aztec/bb.js/dest/browser/index.js";
 import { ethers } from "ethers"

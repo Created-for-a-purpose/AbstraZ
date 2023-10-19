@@ -20,9 +20,7 @@ export default function JoinDao() {
     setVerified(isVerified)
   }
 
-  const joinDao = async()=>{
-    alert('joined')
-  }
+  const joinDao = async()=>{}
 
   useEffect(() => {
     async function getDaos() {
@@ -38,12 +36,13 @@ export default function JoinDao() {
       {
         daos?.map((dao, index) => <DaoCard
           key={index}
+          id={index}
           Amount={dao[1]}
-          buttonText={verified?"Join DAO >":"Verify zk-KYC/VC"}
+          verified={verified}
           KYC={"Age should be above 18"+(verified?(" Verified ZK ✅"):(""))}
           NAV={"$100"}
           Title={dao[0]}
-          setClicked={verified?joinDao:verify}
+          onClick={verified?joinDao:verify}
         />)
       }
     </div>
