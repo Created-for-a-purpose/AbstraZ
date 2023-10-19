@@ -1,76 +1,68 @@
+const Operators = {
+    NOOP: 0, // No operation, skip query verification in circuit
+    EQ: 1, // equal
+    LT: 2, // less than
+    GT: 3, // greater than
+    IN: 4, // in
+    NIN: 5, // not in
+    NE: 6   // not equal
+}
+
 async function main() {
-    const [deployer] = await ethers.getSigners()
-    const spongePoseidonLib = "0x12d8C87A61dAa6DD31d8196187cFa37d1C647153";
-    const poseidon6Lib = "0xb588b8f07012Dc958aa90EFc7d3CF943057F17d7";
-    
-    const ageVerifier = await ethers.deployContract("AgeVerifier", [deployer.address]);
+    const address = "0x97c0bB8d57540FC75ECa33C92C6e023A2a09cc65"
+    // await setZKRequest(address);
+    // return
+    const poseidonFacade = "0xD65f5Fc521C4296723c6Eb16723A8171dCC12FB0";
+    const validatorAddress = "0xF2D4Eeb4d455fb673104902282Ce68B9ce4Ac450"
+    // const ageVerifierc = await ethers.getContractAt("AgeVerifier", address);
+    // const value= [20050101, ...new Array(63).fill(0).map(i => 0)]
+    // const schemaBigInt = "74977327600848231385663280181476307657"
+    // const schemaClaimPathKey = "20376033832371109177683048456014525905119173674985843915445634726167450989630"
+    // const result=await ageVerifierc.setZKPRequest(1,validatorAddress,schemaBigInt,schemaClaimPathKey,2,value);
+    // console.log('result', result.hash)
+    // return
 
-    await ageVerifier.waitForDeployment();
+    const AgeVerifier = await ethers.getContractFactory("AgeVerifier", {
+        libraries: {
+            PoseidonFacade: poseidonFacade,
+        },
+    });
 
-    console.log("AgeVerifier deployed to:", ageVerifier.target);
-    await setZKRequest(ageVerifier.target);
+    const ageVerifier = await AgeVerifier.deploy();
+    console.log("Contract address:", ageVerifier.target);
 }
 
 async function setZKRequest(AgeVerifierAddress) {
-    const Operators = {
-        NOOP: 0, // No operation, skip query verification in circuit
-        EQ: 1, // equal
-        LT: 2, // less than
-        GT: 3, // greater than
-        IN: 4, // in
-        NIN: 5, // not in
-        NE: 6   // not equal
-    }
-    
-    const requestId = 1;
-    const circuitId = "credentialAtomicQuerySig";
-    const validatorAddress = "0xb1e86C4c687B85520eF4fd2a0d14e81970a15aFB";
-    const schemaHash = "9c2498080a90d43cada7fec79eeee8de"; 
-    const schemaEnd = fromLittleEndian(hexToBytes(schemaHash));
+    console.log("Age verifier contract:", AgeVerifierAddress);
 
+    const schemaBigInt = "74977327600848231385663280181476307657"
+    // merklized path to field in the W3C credential according to JSONLD  schema e.g. birthday in the KYCAgeCredential under the url "https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json-ld/kyc-v3.json-ld"
+    const schemaClaimPathKey = "20376033832371109177683048456014525905119173674985843915445634726167450989630"
+    const requestId = 1;
     const query = {
-        circuitId,
-        schema: BigInt(schemaEnd),
-        slotIndex: 2,
+        schema: schemaBigInt,
+        claimPathKey: schemaClaimPathKey,
         operator: Operators.LT, // operator
         value: [20050101, ...new Array(63).fill(0).map(i => 0)], // for operators 1-3 only first value matters
-        publicInput: [1]
     };
 
-    let ageVerifier = await ethers.getContractAt("AgeVerifier", AgeVerifierAddress)
+    let ageVerifier = await ethers.getContractAt("AgeVerifier", AgeVerifierAddress);
 
-    try {
-        await ageVerifier.setZKPRequest(
-            requestId,
-            validatorAddress,
-            query
-        );
-        console.log("Request set");
-    } catch (e) {
-        console.log("error: ", e);
-    }
-
-}
-
-const hexToBytes = (hex) => {
-    for (var bytes = [], c = 0; c < hex.length; c += 2) {
-        /**
-         * @dev parseInt 16 = parsed as a hexadecimal number
-         */
-        bytes.push(parseInt(hex.substr(c, 2), 16));
-    }
-    return bytes;
-};
-
-const fromLittleEndian = (bytes) => {
-    const n256 = BigInt(256);
-    let result = BigInt(0);
-    let base = BigInt(1);
-    bytes.forEach((byte) => {
-        result += base * BigInt(byte);
-        base = base * n256;
-    });
-    return result;
+    const validatorAddress = "0xF2D4Eeb4d455fb673104902282Ce68B9ce4Ac450"; // sig validator
+    // const validatorAddress = "0x3DcAe4c8d94359D31e4C89D7F2b944859408C618"; // mtp validator
+    // const req = await ageVerifier.getZKPRequest(requestId); 
+    // console.log("Request: ", req);
+    // return;
+    const txId = await ageVerifier.setZKPRequest(
+        requestId,
+        validatorAddress,
+        query.schema,
+        query.claimPathKey,
+        query.operator,
+        query.value, 
+        { gasLimit: "1000000"}
+    );
+    console.log("Request set: ", txId.hash);
 };
 
 // We recommend this pattern to be able to use async/await everywhere
