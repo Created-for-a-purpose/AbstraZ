@@ -1,6 +1,7 @@
 import styles from "./DaoCard.module.css";
+import Link from "next/link";
 
-export default function DaoCard({Amount, NAV, Title, KYC, setClicked}) {
+export default function DaoCard({id, Amount, NAV, Title, KYC, verified, onClick}) {
   return (
     <>
       <div className={styles.container}>
@@ -19,7 +20,7 @@ export default function DaoCard({Amount, NAV, Title, KYC, setClicked}) {
           </div>
         </div>
         <div className={styles.right}>
-          <button className={styles.btn} onClick={()=>setClicked(true)}>Verify zk-KYC/VC</button>
+          <button className={styles.btn} onClick={onClick}>{verified?<Link href={`/dao/${id}`} className={styles.join}>Join DAO</Link>:"Verify zk-KYC/VC"}</button>
         </div>
       </div>
     </>

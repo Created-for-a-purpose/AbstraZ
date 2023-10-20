@@ -4,15 +4,23 @@ import DaoCard from "@/components/DaoCard/DaoCard";
 import styles from "./page.module.css";
 import { useAuthKit } from "@/hooks/useAuthKit";
 import { useAxelar } from "@/hooks/useAxelar";
-import { QRCodeSVG } from "qrcode.react";
-import ageProofRequest from "@/utils/ageProofRequest.json"
+import { useNoir } from "@/hooks/useNoir";
 
 export default function JoinDao() {
   const { chain, eoa } = useAuthKit();
   const { getAllDaos } = useAxelar();
 
   const [daos, setDaos] = useState([]);
-  const [clicked, setClicked] = useState(false);
+  const [verified, setVerified] = useState(false);
+
+  const verify = async () => {
+    const {verifyZkKyc} = await useNoir()
+    const input = { x: 18, y: 18 }
+    const isVerified = await verifyZkKyc(input)
+    setVerified(isVerified)
+  }
+
+  const joinDao = async()=>{}
 
   useEffect(() => {
     async function getDaos() {
@@ -28,19 +36,15 @@ export default function JoinDao() {
       {
         daos?.map((dao, index) => <DaoCard
           key={index}
+          id={index}
           Amount={dao[1]}
-          KYC={"Age should be above 18"}
+          verified={verified}
+          KYC={"Age should be above 18"+(verified?(" Verified ZK ✅"):(""))}
           NAV={"$100"}
           Title={dao[0]}
-          setClicked={setClicked}
+          onClick={verified?joinDao:verify}
         />)
       }
-      {clicked &&
-        <div className={styles.qr}>
-          <QRCodeSVG
-          value={JSON.stringify(ageProofRequest)} 
-          height={200} width={200}
-        /></div>}
     </div>
   );
 }
