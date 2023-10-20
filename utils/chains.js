@@ -4,6 +4,7 @@ export const chains = {
         name: 'Polygon',
         rpcTarget: 'https://indulgent-shy-aura.matic-testnet.discover.quiknode.pro/f3eadc815d04049d61d581cc6e1f6a6f152c7eec/',
         CrosschainDao: '0x0041Aac7166A2C19eCFfE2D6b64097fe5F176d31',
+        DataConsumer: '0x45bf1c05a233Af8C58b88aADC6aD44aD5d100030',
         symbol: 'matic'
    },
    polygonZkEvm: {
