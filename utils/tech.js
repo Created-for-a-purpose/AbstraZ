@@ -5,14 +5,9 @@ export const tech = [
         image: "https://storage.googleapis.com/ethglobal-api-production/organizations%2Fweaax%2Flogo%2F1667857487267_vRyTLmek_400x400.jpeg"
     },
     {
-        title: "Polygon LxLy Bridge",
+        title: "Polygon zkEVM",
         subtitle: "Now even your grandmother can use this Dapp",
-        image: "https://altcoinsbox.com/wp-content/uploads/2023/03/matic-logo.webp"
-    },
-    {
-        title: "Polygon ID",
-        subtitle: "Now even your grandmother can use this Dapp",
-        image: "https://0xpolygonid.github.io/tutorials/logo.svg"
+        image: "https://storage.googleapis.com/ethglobal-api-production/organizations%2F536ub%2Fimages%2FWhite%20on%20Gradient%20Square.png"
     },
     {
         title: "Mantle",
@@ -25,9 +20,9 @@ export const tech = [
         image: "https://storage.googleapis.com/ethglobal-api-production/organizations%2Fhoadp%2Flogo%2F1689003158465_V-65_xQ1_400x400.jpeg"
     },
     {
-        title: "Sismo",
+        title: "Noir",
         subtitle: "Now even your grandmother can use this Dapp",
-        image: "https://storage.googleapis.com/ethglobal-api-production/organizations%2F4i0qt%2Flogo%2F1678897928125_he6JlFgW_400x400.jpeg"
+        image: "https://storage.googleapis.com/ethglobal-api-production/organizations%2Fnhs1x%2Fimages%2FAztec_logo_icon.png"
     },
     {
         title: "Chainlink",

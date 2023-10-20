@@ -12,12 +12,12 @@ export default function ProposalCard(params) {
                 </div>
                 <div className={styles.votes}>
                     <button className={styles.btn2}>Vote anonymously</button>
-                    <div className={styles.vote}>Up-votes : 0</div>
-                    <div className={styles.vote}>Down-votes : 0</div>
+                    <div className={styles.vote}>⬆️ Up-votes : 0</div>
+                    <div className={styles.vote}>⬇️ Down-votes : 0</div>
                 </div>
             </div>
             <div className={styles.right}>
-            <button className={styles.btn}>Generate Proof of Vote</button>
+            <button className={styles.btn}>Generate Proof of Vote 🔑</button>
             </div>
         </div>
         </>

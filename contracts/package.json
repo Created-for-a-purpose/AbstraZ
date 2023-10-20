@@ -7,6 +7,7 @@
   "dependencies": {
     "@axelar-network/axelar-gmp-sdk-solidity": "^5.4.0",
     "@axelar-network/axelarjs-sdk": "^0.13.6",
+    "@chainlink/contracts": "^0.8.0",
     "@iden3/contracts": "^1.1.0",
     "@openzeppelin/contracts": "^5.0.0",
     "axios": "^1.5.1",

@@ -9,7 +9,7 @@ export default function Home() {
   function Entry({ props }) {
     return (
       <div className={styles.entry}>
-        <img src={props.image}/>
+        <img src={props.image} crossOrigin="anonymous"/>
         <div className={styles.details}>
           <div className={styles.title}>{props.title}</div>
           <div className={styles.subtitle}>{props.subtitle}</div>
