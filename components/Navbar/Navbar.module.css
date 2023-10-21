@@ -15,87 +15,103 @@
 }
 
 .eth {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
 
-.eth *{
-    animation: glow 1s infinite alternate;
-    color: rgb(255, 71, 123);
+.eth * {
+  animation: glow 1s infinite alternate;
+  color: rgb(255, 71, 123);
 }
 
 @keyframes glow {
-    0% {
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
-    }
-    100% {
-        filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.2));
-    }
+  0% {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+  }
+  100% {
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.2));
+  }
 }
 
-
 .title {
-    color: var(--green);
-    text-decoration: none;
+  color: var(--green);
+  text-decoration: none;
 }
 
 .middle {
-    width: 34%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
+  width: 34%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .link {
-    text-decoration: none;
-    font-size: 1.25rem;
+  text-decoration: none;
+  font-size: 1.25rem;
 }
 
 .link:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .link:active {
-    transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 .right {
-    width: 33%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+  width: 33%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .dot {
-    height: 20px;
-    width: 20px;
-    border-radius: 100%;
-    animation: glow2 2s infinite alternate;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  animation: glow2 2s infinite alternate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dot_inner {
-    height: 10px;
-    width: 10px;
-    border-radius: 100%;
-    background-color: var(--green);
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  background-color: var(--green);
 }
 
-
 @keyframes glow2 {
-    0% {
-        box-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
-    }
-    100% {
-        box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-    }
+  0% {
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+  }
 }
 
 .chain {
-    font-size: 1.25rem;
+  font-size: 1.25rem;
+}
+.chainDropdown {
+  position: relative;
+  min-width: 100px;
+}
+
+.chainSelect {
+  appearance: none;
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  background-color: var(--black);
+  font-size: 1.25rem;
+}
+
+.chainSelect:focus {
+  outline: none;
 }

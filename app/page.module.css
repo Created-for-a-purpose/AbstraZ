@@ -35,6 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  height: 5rem;
 }
 
 .top .left .btn_container .btn {
@@ -45,7 +46,6 @@
   color: black;
   border-radius: 0.25rem;
   font-size: 1.5rem;
-  margin-top: 3rem;
   margin-left: 2.5rem;
   cursor: pointer;
 }

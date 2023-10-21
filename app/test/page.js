@@ -1,26 +1,20 @@
 'use client'
-
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useTwitter } from "@/hooks/useTwitter";
 
 
 export default function Test(params) {
-    const {followers, setData} = useTwitter();
-    const {data} = useSession();
-    async function handleClick() {
-        // const res = await fetch("http://localhost:3000/api/auth/signin", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         callbackUrl: "http://localhost:3000/"
-        //     })
-        // });
-        // console.log(res);
-        console.log(data.user);
-        setData(data.user.access_token, data.user.name);
-    }
+    const {data, status} = useSession();
+    const {setData, followers}= useTwitter();
+      
+      async function handleClick () { 
+        if(status === "unauthenticated") {
+          signIn('twitter');
+        }
+        console.log(followers);
+        setData(data.user.access_token);
+      }
     return (
         <>
         <button onClick={handleClick}>SignIN</button>
