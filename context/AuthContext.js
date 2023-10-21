@@ -80,7 +80,6 @@ const AuthContextProvider = ({ children }) => {
         const { safes, eoa } = await web3AuthModalPack.signIn()
         setEoa(eoa)
         setSafes(safes || [])
-
         const provider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider())
         setProvider(provider)
     }, [chain, web3AuthModalPack])

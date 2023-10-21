@@ -4,7 +4,7 @@ export default function MemberCard(params) {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.name}>Name</div>
+        <div className={styles.name}>You</div>
         <div className={styles.role}>
             <p>Member</p>
         </div>
