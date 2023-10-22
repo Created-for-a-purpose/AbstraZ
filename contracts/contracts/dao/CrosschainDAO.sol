@@ -11,8 +11,9 @@ contract CrosschainDAO is Daos, AxelarExecutable {
 
     constructor(
         address _gateway,
-        address _gasService
-    ) AxelarExecutable(_gateway) {
+        address _gasService,
+        address _verifier
+    ) AxelarExecutable(_gateway) Daos(_verifier) {
         gasService = IAxelarGasService(_gasService);
     }
 
@@ -23,7 +24,46 @@ contract CrosschainDAO is Daos, AxelarExecutable {
     ) external payable {
         require(msg.value > 0, "Pay gas");
         createDao(_dao_details);
-        bytes memory payload = abi.encode(_dao_details);
+        bytes memory payload = abi.encode(1, _dao_details);
+        gasService.payNativeGasForContractCall{value: msg.value}(
+            address(this),
+            destinationChain,
+            destinationAddress,
+            payload,
+            msg.sender
+        );
+
+        gateway.callContract(destinationChain, destinationAddress, payload);
+    }
+
+    function castVoteCrosschain(
+        string calldata destinationChain,
+        string calldata destinationAddress,
+        uint256 pid,
+        zkVoting calldata _zkVoting
+    ) external payable {
+        require(msg.value > 0, "Pay gas");
+        bytes memory payload = abi.encode(2, _zkVoting, pid);
+        gasService.payNativeGasForContractCall{value: msg.value}(
+            address(this),
+            destinationChain,
+            destinationAddress,
+            payload,
+            msg.sender
+        );
+
+        gateway.callContract(destinationChain, destinationAddress, payload);
+    }
+
+    function revealVoteCrosschain(
+        string calldata destinationChain,
+        string calldata destinationAddress,
+        bytes32 hash,
+        uint256 pid,
+        uint256 vote
+    ) external payable {
+        require(msg.value > 0, "Pay gas");
+        bytes memory payload = abi.encode(3, hash, pid, vote);
         gasService.payNativeGasForContractCall{value: msg.value}(
             address(this),
             destinationChain,
@@ -40,8 +80,25 @@ contract CrosschainDAO is Daos, AxelarExecutable {
         string calldata,
         bytes calldata payload
     ) internal override {
-        dao_details memory _dao_details;
-        (_dao_details) = abi.decode(payload, (dao_details));
-        createDao(_dao_details);
+        (uint256 execCode, ) = abi.decode(payload, (uint256, dao_details));
+        if (execCode == 1) {
+            (, dao_details memory _dao_details) = abi.decode(
+                payload,
+                (uint256, dao_details)
+            );
+            createDao(_dao_details);
+        } else if (execCode == 2) {
+            (, zkVoting memory _zkVoting, uint256 pid) = abi.decode(
+                payload,
+                (uint256, zkVoting, uint256)
+            );
+            castVote(pid, _zkVoting);
+        } else if (execCode == 3) {
+            (, bytes32 hash, uint256 pid, uint256 vote) = abi.decode(
+                payload,
+                (uint256, bytes32, uint256, uint256)
+            );
+            revealVote(hash, pid, vote);
+        } 
     }
 }

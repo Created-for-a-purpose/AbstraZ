@@ -2600,7 +2600,7 @@
 //     }
 // }
 
-// contract UltraVerifier is BaseUltraVerifier {
+// contract AgeVerifier is BaseUltraVerifier {
 //     function getVerificationKeyHash() public pure override(BaseUltraVerifier) returns (bytes32) {
 //         return UltraVerificationKey.verificationKeyHash();
 //     }
