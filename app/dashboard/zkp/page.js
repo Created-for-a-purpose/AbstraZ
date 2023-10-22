@@ -11,7 +11,8 @@ export default function ZKP(params) {
   const { setData, followers } = useTwitter();
   console.log(followers);
   async function handleTwitter() {
-    if (status === "unauthenticated") {
+    if (status !== "authenticated") {
+      console.log('h');
       signIn("twitter");
     }
     console.log(followers);
@@ -23,7 +24,7 @@ export default function ZKP(params) {
         <h1 className={styles.title}>ZK Proofs</h1>
         <div className={styles.content}>
           <div className={styles.row}>
-            <div className={styles.name}><TbRating18Plus className={styles.red}></TbRating18Plus> Prove age</div>
+            <div className={styles.name}><TbRating18Plus className={styles.red}></TbRating18Plus> Proof of age</div>
             <div className={styles.button}>
               <button>Generate proof</button>
             </div>
@@ -31,18 +32,18 @@ export default function ZKP(params) {
           <div className={styles.row}>
             <div className={styles.name}>
               <RiTwitterXFill></RiTwitterXFill>{" "}
-              Prove twitter followers
+              Proof of twitter followers
             </div>
             <div className={styles.twitter}>
               {followers === "" ? (
                 <button onClick={handleTwitter}>Sign in with <RiTwitterXFill className={styles.x}></RiTwitterXFill></button>
               ) : (
-                <button>Generate proof</button>
+                <button>Connected !</button>
               )}
             </div>
           </div>
           <div className={styles.row}>
-            <div className={styles.name}><HiUserGroup className={styles.green}></HiUserGroup> Prove DAO membership</div>
+            <div className={styles.name}><HiUserGroup className={styles.green}></HiUserGroup> Proof of DAO membership</div>
             <div className={styles.button}>
               <button>Generate Proof</button>
             </div>

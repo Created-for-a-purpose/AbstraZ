@@ -1,4 +1,6 @@
 import ageCircuit from "@/noir/age/target/noir.json"
+import voteCircuit from "@/noir/vote/target/vote.json"
+import voteRevealCircuit from "@/noir/voteReveal/target/voteReveal.json"
 import { decompressSync } from "fflate"
 import { Crs, newBarretenbergApiAsync, RawBuffer } from "@aztec/bb.js/dest/browser/index.js";
 import { ethers } from "ethers"
@@ -59,5 +61,19 @@ export async function useNoir() {
         const isVerified = await verifyProof(ageCircuit, proof)
         return isVerified
     }
-    return { verifyZkKyc }
+    const verifyVote = async (input) => {
+        const acirBuffer = Buffer.from(ageCircuit.bytecode, 'base64')
+        const witness = await generateWitness(input, acirBuffer)
+        const proof = await generateProof(voteCircuit, witness)
+        const isVerified = await verifyProof(voteCircuit, proof)
+        return isVerified
+    }
+    const verifyVoteReveal = async (input) => {
+        const acirBuffer = Buffer.from(ageCircuit.bytecode, 'base64')
+        const witness = await generateWitness(input, acirBuffer)
+        const proof = await generateProof(voteRevealCircuit, witness)
+        const isVerified = await verifyProof(voteRevealCircuit, proof)
+        return isVerified
+    }
+    return { verifyZkKyc, verifyVote, verifyVoteReveal }
 }

@@ -5,6 +5,8 @@ import styles from "./page.module.css";
 import { FaExternalLinkAlt } from "react-icons/fa"
 import { useAuthKit } from "@/hooks/useAuthKit";
 import { useAxelar } from "@/hooks/useAxelar";
+import Link from "next/link";
+import { chains } from "@/utils/chains";
 
 export default function CreateDao() {
   // State variables to store input field values
@@ -15,7 +17,7 @@ export default function CreateDao() {
   const [inputFields, setInputFields] = useState([]); // MultiSig Treasury
   const [treasuryAddress, setTreasuryAddress] = useState(""); // Treasury Address
 
-  const { eoa, createTreasurySafe } = useAuthKit();
+  const { eoa, chain, createTreasurySafe } = useAuthKit();
   const { createDao } = useAxelar();
 
   // Event handlers to update state variables
@@ -50,9 +52,9 @@ export default function CreateDao() {
   const handleSubmit = async ()=>{
     if(!eoa) return;
     const operators = inputFields.map((inputField)=>inputField.walletAddress)
-    const treasuryAddress = await createTreasurySafe(operators)
-    setTreasuryAddress(treasuryAddress)
-    await createDao(daoName, amount+' '+selectedToken, selectedZkKyc, treasuryAddress)
+    let tAddress = (treasuryAddress==='')?await createTreasurySafe(operators):treasuryAddress;
+    setTreasuryAddress(tAddress)
+    await createDao(daoName, amount+' '+selectedToken, selectedZkKyc, tAddress)
   }
 
   return (
@@ -132,9 +134,9 @@ export default function CreateDao() {
               </button>
             </div>
           </div>
-          { treasuryAddress!=='' &&
+          { treasuryAddress &&
           <div className={styles.safe}>✅ Treasury Address: {treasuryAddress} 
-          <FaExternalLinkAlt className={styles.safeLink}/>
+          <Link target="_blank" href={chains[chain].blockExplorer+"/address/"+treasuryAddress}><FaExternalLinkAlt className={styles.safeLink}/></Link>
           </div> }
           <button className={styles.submit} onClick={handleSubmit}>Create</button>
         </div>

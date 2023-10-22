@@ -22,6 +22,7 @@ const AuthContextProvider = ({ children }) => {
     const [safes, setSafes] = useState([])
     const [web3AuthModalPack, setWeb3AuthModalPack] = useState(null)
     const [provider, setProvider] = useState(null)
+    const [eoaBalance, setEoaBalance] = useState('...')
 
     useEffect(() => {
         async function loadAuthModal() {
@@ -81,6 +82,7 @@ const AuthContextProvider = ({ children }) => {
         setEoa(eoa)
         setSafes(safes || [])
         const provider = new ethers.providers.Web3Provider(web3AuthModalPack.getProvider())
+        setEoaBalance(await provider?.getBalance(eoa))
         setProvider(provider)
     }, [chain, web3AuthModalPack])
 
@@ -91,7 +93,7 @@ const AuthContextProvider = ({ children }) => {
 
     const fetchSafeAddress = async () => {
         if (!provider) return
-        const signer = provider.getSigner()
+        const signer = await provider?.getSigner()
         const safeAccountAbs = new AccountAbstraction(signer)
         const relayPack = new GelatoRelayPack()
         await safeAccountAbs.init({ relayPack })
@@ -130,7 +132,7 @@ const AuthContextProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ chain, eoa, safes, provider, login, fetchSafeAddress, fetchSafeBalance, createTreasurySafe, setChain }}>
+        <AuthContext.Provider value={{ chain, eoa, eoaBalance, safes, provider, login, fetchSafeAddress, fetchSafeBalance, createTreasurySafe, setChain }}>
             {children}
         </AuthContext.Provider>
     )

@@ -1,5 +1,5 @@
 import styles from './ProposalCard.module.css';
-export default function ProposalCard(params) {
+export default function ProposalCard({chain}) {
     return (
         <>
         <div className={styles.container}>
@@ -12,8 +12,8 @@ export default function ProposalCard(params) {
                 </div>
                 <div className={styles.votes}>
                     <button className={styles.btn2}>Vote anonymously</button>
-                    <div className={styles.vote}>⬆️ Up-votes : 0</div>
-                    <div className={styles.vote}>⬇️ Down-votes : 0</div>
+                    {chain==='mumbai'&&<><div className={styles.vote}>⬆️ Up-votes : 0</div>
+                    <div className={styles.vote}>⬇️ Down-votes : 0</div></>}
                 </div>
             </div>
             <div className={styles.right}>

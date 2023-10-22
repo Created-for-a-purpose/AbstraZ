@@ -35,7 +35,7 @@ export default function Home() {
         </div>
         <div className={styles.right}>
           <div className={styles.image}>
-            <img src="https://ethereum.org/static/754d2f72ce2296fb59d9d974aeda16be/e2b9b/future_transparent.png" />
+            <img src={"./eth.png"} />
           </div>
         </div>
       </div>

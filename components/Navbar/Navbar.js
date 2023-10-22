@@ -3,13 +3,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from './Navbar.module.css';
 import { FaEthereum } from 'react-icons/fa';
+import { useAuthKit } from '@/hooks/useAuthKit';
 
 export default function Navbar() {
-  const [selectedChain, setSelectedChain] = useState('Mumbai');
-
-  const handleChainChange = (event) => {
-    setSelectedChain(event.target.value);
-  };
+  const { chain, setChain } = useAuthKit();
 
   return (
     <>
@@ -29,12 +26,13 @@ export default function Navbar() {
           </div>
           <div className={styles.chainDropdown}>
             <select
-              value={selectedChain}
-              onChange={handleChainChange}
+              value={chain}
+              onChange={(e)=>setChain(e.target.value)}
               className={styles.chainSelect} 
             >
-              <option value="Mumbai">Mumbai</option>
-              <option value="OtherChain">Other Chain</option>
+              <option value="mumbai">Mumbai</option>
+              <option value="polygonZkEvm">Polygon zkEVM</option>
+              <option value="mantle">Mantle</option>
             </select>
           </div>
         </div>

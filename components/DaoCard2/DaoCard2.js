@@ -1,8 +1,11 @@
 import styles from "./DaoCard2.module.css";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Link from "next/link";
+import { chains } from "@/utils/chains";
+import { useAuthKit } from "@/hooks/useAuthKit";
 
 export default function DaoCard2({ Amount, NAV, Title, TreasuryAddress }) {
+  const {chain} = useAuthKit();
   return (
     <>
       <div className={styles.container}>
@@ -12,7 +15,7 @@ export default function DaoCard2({ Amount, NAV, Title, TreasuryAddress }) {
             <div className={styles.property}>💰Treasury NAV : {NAV}</div>
             <div className={styles.property}>💲Minimum Investment: {Amount}</div>
             <div className={styles.property}>🪙Treasury Address:
-              <Link href="https://google.com" target="_blank" className={styles.link}>
+              <Link href={chains[chain].blockExplorer+"address/"+TreasuryAddress} target="_blank" className={styles.link}>
                 {TreasuryAddress?.slice(0, 6) + "..." + TreasuryAddress?.slice(-4)}
                 <FaExternalLinkAlt className={styles.linkImage}/>
               </Link>

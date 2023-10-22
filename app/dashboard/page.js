@@ -1,10 +1,14 @@
+'use client'
 import styles from "./page.module.css";
 import { BsSafe } from "react-icons/bs";
 import { SiEthereum } from "react-icons/si";
 import { PiLinkSimple, PiClockClockwiseDuotone } from "react-icons/pi";
 import Link from "next/link";
+import { useAuthKit } from "@/hooks/useAuthKit";
+import { chains } from "@/utils/chains";
 
 export default function Dashboard() {
+  const { eoa, eoaBalance, chain } = useAuthKit();
   return (
     <>
       <div className={styles.container}>
@@ -15,11 +19,15 @@ export default function Dashboard() {
           <div className={styles.content}>
             <div className={styles.row}>
               <div className={styles.name}>EOA</div>
-              <div className={styles.address}>0x123...456</div>
+              <div className={styles.address}>
+                <Link href={chains[chain].blockExplorer+"address/"+eoa} target="_blank" style={{textDecoration:"none"}}>
+                  {eoa.slice(0,6)+'...'+eoa.slice(-4)}
+                </Link>
+              </div>
             </div>
             <div className={styles.row}>
               <div className={styles.name}>Balance</div>
-              <div className={styles.address}>1.2 Eth</div>
+              <div className={styles.address}>{(eoaBalance.toString()/10**18).toFixed(3)} {chains[chain].token}</div>
             </div>
           </div>
         </div>

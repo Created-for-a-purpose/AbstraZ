@@ -11,7 +11,7 @@ export const useAxelar = () => {
        const contract = new ethers.Contract(
             chains[chain].CrosschainDao,
             crosschainAbi.abi,
-            await provider.getSigner()
+            await provider?.getSigner()
         )
         return contract;
     }
@@ -46,11 +46,13 @@ export const useAxelar = () => {
             symbol: chains[chain].symbol
         }, { name: destinationChain });
         const crosschainDaoContract = await getCrosschainDaoContract();
+        let dc = destinationChain==="polygonzkevm"?'polygon-zkevm':destinationChain
+        console.log('Creating crosschain dao on ', dc, ' with gas fee: ', destinationChain)
         await crosschainDaoContract.createCrosschainDao(
-            destinationChain,
+            dc,
             destinationAddress,
             daoDetails,
-            { value: gasFee }
+            { value: gasFee, gasLimit: 1000000 }
         )
     }
 

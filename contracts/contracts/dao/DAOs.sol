@@ -68,7 +68,7 @@ contract Daos {
     function createProposal(
         proposal memory _proposal,
         uint256 daoId
-    ) internal {
+    ) external {
         uint256 proposalId = _deterministicProposalId(_proposal, daoId);
         proposals[proposalId] = _proposal;
         proposalsByDao[daoId].push(proposalId);

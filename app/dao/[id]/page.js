@@ -7,13 +7,17 @@ import { useAxelar } from "@/hooks/useAxelar";
 import { useAuthKit } from "@/hooks/useAuthKit";
 import { useState, useEffect } from "react";
 import { useChainlinkFeed } from "@/hooks/useChainlinkFeed";
+import { useTwitter } from "@/hooks/useTwitter";
+import { useNoir } from "@/hooks/useNoir";
 
 export default function DAO({ params }) {
-  const { eoa } = useAuthKit();
+  const { eoa, chain } = useAuthKit();
   const { getAllDaos } = useAxelar();
   const { getEthFeed, getMaticFeed } = useChainlinkFeed();
   const [nav, setNav] = useState(0)
   const [dao, setDao] = useState(null)
+  const { followers } = useTwitter()
+  const [verified, setVerified] = useState(false)
 
   useEffect(() => {
     if (!eoa) return
@@ -34,15 +38,23 @@ export default function DAO({ params }) {
     calcNav()
   }, [eoa, dao]);
 
+  const verify = async ()=>{
+    if(!followers) return
+    const {verifyZkKyc} = await useNoir()
+    const input = { x: followers, y: 40}
+    const isVerified = await verifyZkKyc(input)
+    setVerified(isVerified)
+  }
+
   return (
     <>
       <div className={styles.container}>
         <DaoCard2 Amount={dao?.[1]} NAV={"$"+nav.toFixed(2)} Title={dao?.[0]} TreasuryAddress={dao?.[3]} />
-        <MemberCard />
+        <MemberCard verified={verified} verify={verify}/>
         <div className={styles.title}>
           Proposals
         </div>
-        <ProposalCard />
+        <ProposalCard chain={chain}/>
       </div>
     </>
   );
